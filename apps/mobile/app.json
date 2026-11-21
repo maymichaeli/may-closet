@@ -1,0 +1,14 @@
+{
+  "expo": {
+    "name": "May Closet",
+    "slug": "may-closet",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "may-closet",
+    "userInterfaceStyle": "light",
+    "plugins": ["expo-router"],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "name": "may-closet",
+  "private": true,
+  "workspaces": ["apps/*"]
+}
