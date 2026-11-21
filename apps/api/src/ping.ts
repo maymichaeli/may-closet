@@ -2,7 +2,9 @@ import { MongoClient } from 'mongodb';
 
 async function pingDatabase() {
   const uri = process.env.MONGODB_URI;
-  if (!uri) throw new Error('Missing MONGODB_URI');
+  if (!uri) {
+    throw new Error('Missing MONGODB_URI');
+  }
 
   const client = new MongoClient(uri, { serverSelectionTimeoutMS: 10000 });
   try {
@@ -17,8 +19,13 @@ async function pingDatabase() {
 try {
   await pingDatabase();
 } catch (error) {
-  const reason = !process.env.MONGODB_URI ? 'missing MONGODB_URI'
-    : error instanceof Error ? error.name : 'unknown error';
+  let reason = 'unknown error';
+  if (!process.env.MONGODB_URI) {
+    reason = 'missing MONGODB_URI';
+  } else if (error instanceof Error) {
+    reason = error.name;
+  }
+
   console.error('Atlas ping failed:', reason);
   process.exitCode = 1;
 }

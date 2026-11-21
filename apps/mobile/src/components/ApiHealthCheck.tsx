@@ -16,9 +16,13 @@ export function ApiHealthCheck() {
           signal: controller.signal,
         });
         const healthy = response.ok && (await response.json())?.status === 'ok';
-        if (active) setStatus(healthy ? 'Connected' : 'Unavailable');
+        if (active) {
+          setStatus(healthy ? 'Connected' : 'Unavailable');
+        }
       } catch {
-        if (active) setStatus('Unavailable');
+        if (active) {
+          setStatus('Unavailable');
+        }
       } finally {
         clearTimeout(timeout);
       }
@@ -34,13 +38,20 @@ export function ApiHealthCheck() {
 
   function refresh() {
     setStatus('Checking');
-    setAttempt(previous => previous + 1);
+    setAttempt((previous) => previous + 1);
   }
 
   return (
     <View style={{ alignItems: 'center' }}>
-      <Text accessibilityLiveRegion="polite" style={{ color: '#725563' }}>API · {status}</Text>
-      <Button title="Refresh connection" color="#75405D" disabled={status === 'Checking'} onPress={refresh} />
+      <Text accessibilityLiveRegion="polite" style={{ color: '#725563' }}>
+        API · {status}
+      </Text>
+      <Button
+        title="Refresh connection"
+        color="#75405D"
+        disabled={status === 'Checking'}
+        onPress={refresh}
+      />
     </View>
   );
 }

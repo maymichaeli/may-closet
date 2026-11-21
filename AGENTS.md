@@ -505,3 +505,17 @@ I want to actively participate in the technical decisions.
 Remember:
 
 **This project is about learning, experimenting, solving problems, building something beautiful, and enjoying software development again.**
+
+## Code readability
+
+- Follow the shared Prettier configuration (100-column target) and workspace ESLint rules.
+- Use braces for conditionals and one statement per line. Separate validation, database operations, and responses with blank lines when it helps tell the steps apart.
+- Use descriptive names. Split dense chains or nested expressions when that makes them easier to debug. Add comments for non-obvious decisions and introduce helpers only when they simplify the caller.
+
+## Session handoff — 2026-11-21
+
+- Foundation and the first wardrobe slice work in the iPhone simulator. Users can create categories, pick a library photo inside a category, preview or replace it, save it, and reopen the category to see the saved image. Duplicate category names are rejected per owner, ignoring case and surrounding whitespace.
+- Fastify uses a local development owner. Atlas stores categories and garment records, and private R2 stores image bytes. Retrying a save with the same draft ID reuses the garment. Routes live in `apps/api/src/routes/`; index setup runs before route registration. Both workspace env files are local and ignored.
+- The saved HEIC photo in Shoes was verified in the simulator. The gallery computes an explicit square thumbnail size. Physical iPhone testing, camera capture, and background removal are still open.
+- Resume with **My Closet management**. Suggested first slice: rename a category in the app and verify that its garments stay attached through the stable category ID. Discuss expected behavior with May before coding. Then cover moving/removing garments and agree on what happens when deleting a nonempty category.
+- After wardrobe management, test camera capture and on-device background removal with actual garments on May’s iPhone, keeping the original available. Then build the outfit builder, save/reopen/edit looks, add collections, and refine the design together using May’s Pinterest references. Planning and multi-user access are later milestones.

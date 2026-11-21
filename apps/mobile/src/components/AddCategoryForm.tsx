@@ -17,7 +17,9 @@ export function AddCategoryForm() {
 
   const canSave = name.trim().length > 0 && !mutation.isPending;
   function save() {
-    if (canSave) mutation.mutate(name.trim());
+    if (canSave) {
+      mutation.mutate(name.trim());
+    }
   }
 
   return (
@@ -29,16 +31,27 @@ export function AddCategoryForm() {
         placeholderTextColor="#725563"
         value={name}
         editable={!mutation.isPending}
-        onChangeText={value => {
+        onChangeText={(value) => {
           setName(value);
-          if (mutation.isError) mutation.reset();
+          if (mutation.isError) {
+            mutation.reset();
+          }
         }}
         onSubmitEditing={save}
         returnKeyType="done"
         style={styles.input}
       />
-      {mutation.isError && <Text accessibilityRole="alert" style={styles.error}>{mutation.error.message}</Text>}
-      <Button title={mutation.isPending ? 'Saving…' : 'Add category'} color="#75405D" disabled={!canSave} onPress={save} />
+      {mutation.isError && (
+        <Text accessibilityRole="alert" style={styles.error}>
+          {mutation.error.message}
+        </Text>
+      )}
+      <Button
+        title={mutation.isPending ? 'Saving…' : 'Add category'}
+        color="#75405D"
+        disabled={!canSave}
+        onPress={save}
+      />
     </View>
   );
 }

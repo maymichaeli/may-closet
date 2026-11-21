@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { Link } from 'expo-router';
 import { Button, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { fetchCategories } from '../api/categories';
@@ -14,8 +15,14 @@ export default function ClosetScreen() {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled" automaticallyAdjustKeyboardInsets>
-        <Text accessibilityRole="header" style={styles.title}>My Closet</Text>
+      <ScrollView
+        contentContainerStyle={styles.content}
+        keyboardShouldPersistTaps="handled"
+        automaticallyAdjustKeyboardInsets
+      >
+        <Text accessibilityRole="header" style={styles.title}>
+          My Closet
+        </Text>
         {query.isPending && <Text style={styles.detail}>Loading categories…</Text>}
         {query.isError && (
           <View style={styles.card}>
@@ -25,16 +32,34 @@ export default function ClosetScreen() {
         )}
         {query.isSuccess && query.data.length === 0 && (
           <View style={styles.card}>
-            <Text accessible={false} accessibilityElementsHidden importantForAccessibility="no" style={styles.ribbon}>🎀</Text>
+            <Text
+              accessible={false}
+              accessibilityElementsHidden
+              importantForAccessibility="no"
+              style={styles.ribbon}
+            >
+              🎀
+            </Text>
             <Text style={styles.message}>Your closet is empty</Text>
             <Text style={styles.detail}>Your clothing and categories will appear here.</Text>
           </View>
         )}
         {query.isSuccess && query.data.length > 0 && (
           <View style={styles.categories}>
-            <Text accessibilityRole="header" style={styles.message}>Categories</Text>
-            {query.data.map(category => (
-              <Text key={category.id} style={styles.category}>{category.name}</Text>
+            <Text accessibilityRole="header" style={styles.message}>
+              Categories
+            </Text>
+            {query.data.map((category) => (
+              <Link
+                key={category.id}
+                style={styles.category}
+                href={{
+                  pathname: '/categories/[id]',
+                  params: { id: category.id, name: category.name },
+                }}
+              >
+                {category.name}
+              </Link>
             ))}
           </View>
         )}
