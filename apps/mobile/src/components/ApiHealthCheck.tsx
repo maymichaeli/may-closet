@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Button, Text, View } from 'react-native';
-import { API_BASE_URL } from '../constants/api';
 
 export function ApiHealthCheck() {
   const [status, setStatus] = useState<'Checking' | 'Connected' | 'Unavailable'>('Checking');
@@ -13,7 +12,7 @@ export function ApiHealthCheck() {
 
     async function checkHealth() {
       try {
-        const response = await fetch(new URL('/health', API_BASE_URL).href, {
+        const response = await fetch(new URL('/health', process.env.EXPO_PUBLIC_API_URL).href, {
           signal: controller.signal,
         });
         const healthy = response.ok && (await response.json())?.status === 'ok';
